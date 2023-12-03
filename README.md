@@ -37,7 +37,7 @@ To install and run this project locally, follow these steps:
 
 1. Open the Password Generator in a web browser.
 
-    ![Screenshot of password generator application](assests/jodielee062788.github.io_js-password-generator_%20(1).png)
+    ![Screenshot of password generator application](assests/pg.png)
 
 2. Click the "Generate Password" button.
 
