@@ -1,69 +1,81 @@
-// Assignment Code
+// assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
+// write password to the #password input
 function writePassword() {
   // prompt for password length
   var passwordLength = promptPasswordLength();
   
   // prompt for character types
-  var includeLowercase = confirm("Include lowercase characters?");
-  var includeUppercase = confirm("Include uppercase characters?");
-  var includeNumeric = confirm("Include numeric characters?");
-  var includeSpecial = confirm("Include special characters?");
+  var passwordLowercase = confirm("Include lowercase characters?");
+  var passwordUppercase = confirm("Include uppercase characters?");
+  var passwordNumeric = confirm("Include numeric characters?");
+  var passwordSpecial = confirm("Include special characters?");
 
   // validate character type selection
-  if (!includeLowercase && !includeUppercase && !includeNumeric && !includeSpecial) {
+  if (!passwordLowercase && !passwordUppercase && ! passwordNumeric && !passwordSpecial) {
     alert("At least one character type should be selected. Please try again.");
     return;
   }
 
   // generate password
-  var password = generatePassword(passwordLength, includeLowercase, includeUppercase, includeNumeric, includeSpecial);
+  var password = generatePassword(passwordLength, passwordLowercase, passwordUppercase, passwordNumeric, passwordSpecial);
 
   // display password
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
 
-// Function to prompt for password length
+// function to prompt for password length
 function promptPasswordLength() {
   var length;
-  do {
-    length = parseInt(prompt("Please specify the desired length for your password. At least 8 characters and no more than 128 characters."));
-  } while (isNaN(length) || length < 8 || length > 128);
 
+  // parseInt is used to convert user input to integer
+  while (true) {
+    length = parseInt(prompt("Please specify the desired length for your password. Enter a number between 8 and 128."));
+
+    // validate input
+    if (!isNaN(length) && length >= 8 && length <= 128) {
+      break;  // Break the loop if the input is valid
+    } else {
+      alert("Invalid input. Please enter a number between 8 and 128.");
+    }
+  }
   return length;
 }
 
-// Function to generate password based on criteria
-function generatePassword(length, includeLowercase, includeUppercase, includeNumeric, includeSpecial) {
-  var characterSet = "";
-  var lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-  var uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  var numericChars = "0123456789";
-  var specialChars = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
+// function to generate password based on criteria
+function generatePassword(length, passwordLowercase, passwordUppercase, passwordNumeric, passwordSpecial) {
+  var passwordChar = ""; // To store the set of characters based on user's preference
+  var lowercaseChar = "abcdefghijklmnopqrstuvwxyz";
+  var uppercaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var numericChar = "0123456789";
+  var specialChar = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
 
-  if (includeLowercase) {
-    characterSet += lowercaseChars;
+  // if true, character will be added to passwordChar
+  if (passwordLowercase) {
+    passwordChar += lowercaseChar;
   }
 
-  if (includeUppercase) {
-    characterSet += uppercaseChars;
+  if (passwordUppercase) {
+    passwordChar += uppercaseChar;
   }
 
-  if (includeNumeric) {
-    characterSet += numericChars;
+  if (passwordNumeric) {
+    passwordChar += numericChar;
   }
 
-  if (includeSpecial) {
-    characterSet += specialChars;
+  if (passwordSpecial) {
+    passwordChar += specialChar;
   }
 
-  var password = "";
+  var password = ""; // To store generated password
+
+  // Math.random() generates a random decimal between 0 (inclusive) and 1 (exclusive)
+  // Math.floor() rounds it down to the nearest integer
+  // The charAt() method is a String method that returns the character at a specified index in a string.
   for (var i = 0; i < length; i++) {
-    var randomIndex = Math.floor(Math.random() * characterSet.length);
-    password += characterSet.charAt(randomIndex);
+    password += passwordChar.charAt(Math.floor(Math.random() * passwordChar.length));
   }
 
   return password;
